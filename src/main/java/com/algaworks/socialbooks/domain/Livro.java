@@ -20,7 +20,7 @@ public class Livro {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String name;
+	private String nome;
 	
 	@JsonInclude(Include.NON_NULL)
 	private Date publicacao;
@@ -41,7 +41,7 @@ public class Livro {
 	public Livro() {};
 	
 	public Livro(String name) {
-		this.name = name;
+		this.nome = name;
 	}
 
 	public Long getId() {
@@ -53,11 +53,11 @@ public class Livro {
 	}
 
 	public String getName() {
-		return name;
+		return nome;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String name) {
+		this.nome = name;
 	}
 
 	public Date getPublicacao() {
