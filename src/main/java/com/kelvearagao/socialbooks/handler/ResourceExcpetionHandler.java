@@ -2,6 +2,7 @@ package com.kelvearagao.socialbooks.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -66,6 +67,26 @@ public class ResourceExcpetionHandler {
 		erro.setTimestamp(System.currentTimeMillis());
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
+	}
+	
+	/**
+	 * Tratativa caso aconteça violação de integridade.
+	 * 
+	 * @param e
+	 * @param request
+	 * @return
+	 */
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<DetalhesErro> handleDataIntegrityViolationException
+			(LivroNaoEncontradoException e, HttpServletRequest request) {
+		
+		DetalhesErro erro = new DetalhesErro();
+		erro.setStatus(400l);
+		erro.setTitulo("Requisição inválida");
+		erro.setMensagemDesenvovedor("http://erros.socialbooks.com/400");
+		erro.setTimestamp(System.currentTimeMillis());
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
 	}
 	
 }
