@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.kelvearagao.socialbooks.domain.Comentario;
 import com.kelvearagao.socialbooks.domain.Livro;
 import com.kelvearagao.socialbooks.services.LivrosService;
-import com.kelvearagao.socialbooks.services.exceptions.LivroNaoEncontradoException;
 
 @RestController
 @RequestMapping(value = "/livros")
@@ -41,24 +41,14 @@ public class LivroResources {
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> buscar(@PathVariable("id") Long id) {
-		Livro livro = null;
-		
-		try {
-			livro = livrosService.buscar(id);
-		} catch (LivroNaoEncontradoException e) {
-			return ResponseEntity.notFound().build();
-		}
+		Livro livro = livrosService.buscar(id);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(livro);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> deletar(@PathVariable("id") Long id) {
-		try {
-			livrosService.deletar(id);
-		} catch (LivroNaoEncontradoException e) {
-			return ResponseEntity.notFound().build();
-		}
+		livrosService.deletar(id);
 		
 		return ResponseEntity.noContent().build();
 	}
@@ -66,14 +56,24 @@ public class LivroResources {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> atualizar(@RequestBody Livro livro, @PathVariable("id") Long id) {
 		livro.setId(id);
-		
-		try {
-			livrosService.atualizar(livro);
-		} catch (LivroNaoEncontradoException e) {
-			return ResponseEntity.notFound().build();
-		}
+		livrosService.atualizar(livro);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Adiciona comentários a determinado livro.
+	 * 
+	 * @param livroId
+	 * @param comentario
+	 */
+	@RequestMapping(value = "/{id}/comentarios", method = RequestMethod.POST)
+	public ResponseEntity<Void> adicionarComentario(@PathVariable("id") Long livroId, @RequestBody Comentario comentario) {
+		livrosService.salvarComentario(livroId, comentario);
+		
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+		
+		return ResponseEntity.created(uri).build();
 	}
 	
 }
