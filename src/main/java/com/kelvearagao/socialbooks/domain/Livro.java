@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -36,6 +38,9 @@ public class Livro {
 	@OneToMany(mappedBy = "livro")
 	private List<Comentario> comentarios;
 	
+	// dominante, pois tem a chave estrangeira
+	@ManyToOne
+	@JoinColumn(name = "AUTOR_ID")
 	@JsonInclude(Include.NON_NULL)
 	private String autor;
 	

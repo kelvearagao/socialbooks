@@ -19,7 +19,7 @@ import com.kelvearagao.socialbooks.services.LivrosService;
 
 @RestController
 @RequestMapping(value = "/livros")
-public class LivroResources {
+public class LivrosResources {
 	
 	@Autowired
 	private LivrosService livrosService;
