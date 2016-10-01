@@ -74,4 +74,17 @@ public class LivrosService {
 		return comentariosRepository.save(comentario);
 	}
 	
+	/**
+	 * Retorna os comentários ao livro.
+	 * 
+	 * @param livroId
+	 * @return
+	 */
+	public List<Comentario> listarComentarios(Long livroId) {
+		Livro livro = buscar(livroId);
+		
+		return livro.getComentarios();
+	}
+	
+	
 }

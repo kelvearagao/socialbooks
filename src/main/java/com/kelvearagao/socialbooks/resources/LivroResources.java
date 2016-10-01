@@ -76,4 +76,18 @@ public class LivroResources {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	/**
+	 * Retorna os comentários ao livro.
+	 * 
+	 * @param livroId
+	 * @return
+	 */
+	@RequestMapping(value = "/{id}/comentarios", method = RequestMethod.GET)
+	public ResponseEntity<List<Comentario>> listarComentarios(@PathVariable("id") Long livroId) {
+		
+		List<Comentario> comentarios = livrosService.listarComentarios(livroId);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(comentarios);
+	}
+	
 }
