@@ -1,4 +1,4 @@
-package com.algaworks.socialbooks;
+package com.kelvearagao.socialbooks;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
